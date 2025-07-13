@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Set List</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <style>
+        table, th, td {
+          border: 3px solid black;
+          border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <h1>Set List 2019-12-15<h1>
+    <pre id="pre"></pre>
+    <table id="list" cellpadding="5" cellspacing="5">
+        <thead><tr><th>Artist</th><th>Title</th><th>Key</th></tr></thead>
+        <tbody></tbody>    
+    </table>
+    <script>
+        var local = "./data/Magic Mics - Setlists - 2019-12-15.csv";
+        var remote = "https://docs.google.com/spreadsheet/pub?key=16haxVSk_zbCNVI0d55zyFDoq2s-AY9HwiadAwIs_Lqs&single=true&gid=0&output=csv";
+        $.ajax({
+            url: remote,
+            async: false,
+            success: function (data){
+                // var pre = document.getElementById("pre");
+                // pre.innerText = data;
+                var lines = data.split("\n");
+                lines.shift();
+                lines.forEach(function(line, index) {
+                    var tokens = line.split(",");
+                    var artist = tokens[0];
+                    var title = tokens[1];
+                    var key = tokens[2];
+                    var table = document.getElementById("list");
+                    var row = table.insertRow(-1);
+                    row.insertCell(0).innerHTML = artist;
+                    row.insertCell(1).innerHTML = title;
+                    row.insertCell(2).innerHTML = key;
+                });
+                
+                
+
+            }
+        });
+    </script>
+</body>
+</html>
